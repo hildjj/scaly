@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scaly: Random Scales</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="./random.js" type="module"></script>
+</head>
+<body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Scaly
+      </h1>
+      <p class="subtitle">
+        Generate lists of musical scales
+      </p>
+      <button id="fourths" class="button is-primary">Fourths</button>
+      <button id="fifths" class="button outline">Fifths</button>
+      <button id="generate" class="button outline">Random</button>
+      <div id="scales" class="columns content">
+        <div class="column">
+          <ol id="scales1" class="scale"></ol>
+        </div>
+        <div class="column">
+          <ol id="scales2" class="scale"></ol>
+        </div>
+        <div class="column">
+          <ol id="scales3" class="scale"></ol>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
