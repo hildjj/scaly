@@ -8,10 +8,11 @@ const FILE = {
 }
 
 class Key {
-  constructor(major, minor, url, ...alts) {
+  constructor(major, minor, ...alts) {
+    this.maj = major
+    this.min = minor
     this.major = Key.pretty(major, DISPLAY);
     this.minor = `<b>${Key.pretty(minor, DISPLAY)}</b> min`;
-    this.url = url
     this.alts = [major, ...alts]
   }
 
@@ -20,22 +21,19 @@ class Key {
   }
 }
 
-const P = 'https://upload.wikimedia.org/wikipedia/commons/'
 const KEYS = [
-  new Key('C', 'A', `${P}3/33/C-major_a-minor.svg`, 'B#'),
-  new Key('F', 'D', `${P}b/b4/F-major_d-minor.svg`, 'E#'),
-  new Key('Bb', 'G', `${P}f/fe/B-flat-major_g-minor.svg`, 'A#'),
-  new Key('Eb', 'C', `${P}c/cf/E-flat-major_c-minor.svg`, 'D#'),
-  new Key('Ab', 'F', `${P}0/0b/A-flat-major_f-minor.svg`, 'G#'),
-  // https://upload.wikimedia.org/wikipedia/commons/2/2d/C-sharp-major_a-sharp-minor.svg
-  new Key('Db', 'Bb', `${P}8/87/D-flat-major_b-flat-minor.svg`, 'C#'),
-  // https://upload.wikimedia.org/wikipedia/commons/3/3d/F-sharp-major_d-sharp-minor.svg
-  new Key('Gb', 'Eb', `${P}7/76/G-flat-major_e-flat-minor.svg`, 'F#'),
-  new Key('B', 'G#', `${P}6/65/B-major_g-sharp-minor.svg`, 'Cb'),
-  new Key('E', 'C#', `${P}f/f3/E-major_c-sharp-minor.svg`, 'Fb'),
-  new Key('A', 'F#', `${P}8/84/A-major_f-sharp-minor.svg`),
-  new Key('D', 'B', `${P}d/d3/D-major_b-minor.svg`),
-  new Key('G', 'E', `${P}1/13/G-major_e-minor.svg`),
+  new Key('C', 'A', 'B#'),
+  new Key('F', 'D', 'E#'),
+  new Key('Bb', 'G', 'A#'),
+  new Key('Eb', 'C', 'D#'),
+  new Key('Ab', 'F', 'G#'),
+  new Key('Db', 'Bb', 'C#'),
+  new Key('Gb', 'Eb', 'F#'),
+  new Key('B', 'G#', 'Cb'),
+  new Key('E', 'C#', 'Fb'),
+  new Key('A', 'F#'),
+  new Key('D', 'B'),
+  new Key('G', 'E'),
 ]
 
 export const majors = KEYS.map(orig => ({key: orig.major, orig}))
@@ -58,15 +56,31 @@ export default function random() {
 }
 
 function mouseIn(ev) {
-  const img = document.getElementById('keysignature')
-  img.src = ev.target.orig.url
-  ev.target.classList.add('has-text-info')
+  const canvas = document.getElementById('keysignature')
+  const VF = Vex.Flow;
+
+  const renderer = new VF.Renderer(
+    canvas,
+    VF.Renderer.Backends.CANVAS
+  );
+
+  renderer.resize(150, 120);
+  const stave = new VF.Stave(0, 0, 120);
+  stave.addClef("treble")
+  new VF.KeySignature(ev.target.orig.maj).addToStave(stave)
+
+  stave.setContext(renderer.getContext()).draw();
 }
 
 function mouseOut(ev) {
-  const img = document.getElementById('keysignature')
-  img.src = ''
-  ev.target.classList.remove('has-text-info')
+  const canvas = document.getElementById('keysignature')
+  const VF = Vex.Flow;
+
+  const renderer = new VF.Renderer(
+    canvas,
+    VF.Renderer.Backends.CANVAS
+  );
+  renderer.getContext().clear()
 }
 
 function fill(scales) {
