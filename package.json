@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "browser-sync start -c .bs-config.cjs"
+    "start": "hostlocal"
   },
   "keywords": [
     "scales",
@@ -15,5 +15,9 @@
     "music theory"
   ],
   "author": "Joe Hildebrand <joe-github@cursive.net>",
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "pnpm@10.31.0",
+  "devDependencies": {
+    "hostlocal": "2.4.1"
+  }
 }
